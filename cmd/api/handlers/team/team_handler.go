@@ -22,13 +22,6 @@ func CreateTeam(c echo.Context) error {
 			"error": "Could not create team",
 		})
 	}
-
-	// if err := db.Create(team).Error; err != nil {
-	// 	c.Logger().Errorf("creat team Error: %v", err)
-	// 	return c.JSON(http.StatusInternalServerError, map[string]string{
-	// 		"error": "Could not create team",
-	// 	})
-	// }
 	return c.JSON(http.StatusOK, team)
 }
 
@@ -57,12 +50,6 @@ func AddMember(c echo.Context) error {
 			"error": "Could not add member",
 		})
 	}
-
-	// if err := db.Create(&teamMember).Error; err != nil {
-	// 	return c.JSON(http.StatusInternalServerError, map[string]string{
-	// 		"error": "Could not add member",
-	// 	})
-	// }
 	return c.JSON(http.StatusOK, teamMember)
 }
 
@@ -91,12 +78,6 @@ func RemoveMember(c echo.Context) error {
 			"error": "Could not remove member",
 		})
 	}
-
-	// if err := db.Where("team_id = ? AND user_id = ?", teamID, userID).Delete(&models.TeamMember{}).Error; err != nil {
-	// 	return c.JSON(http.StatusInternalServerError, map[string]string{
-	// 		"error": "Could not remove member",
-	// 	})
-	// }
 	return c.JSON(http.StatusOK, map[string]string{
 		"message": "Member removed",
 	})
@@ -116,12 +97,6 @@ func MakeAdmin(c echo.Context) error {
 			"error": "Could not make admin",
 		})
 	}
-
-	// if err := db.Model(&models.User{}).Where("id = ?", userID).Update("is_admin", true).Error; err != nil {
-	// 	return c.JSON(http.StatusInternalServerError, map[string]string{
-	// 		"error": "Could not make admin",
-	// 	})
-	// }
 	return c.JSON(http.StatusOK, map[string]string{
 		"message": "User is now an admin",
 	})
