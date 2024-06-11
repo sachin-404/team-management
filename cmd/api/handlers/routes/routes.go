@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"net/http"
 	"task/cmd/api/handlers/auth"
 	"task/cmd/api/handlers/team"
 
@@ -14,6 +15,10 @@ func RegisterRoutes(e *echo.Echo, db *gorm.DB) {
 			c.Set("db", db)
 			return next(c)
 		}
+	})
+
+	e.GET("/health", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
 	})
 
 	e.POST("/login", auth.Login)
