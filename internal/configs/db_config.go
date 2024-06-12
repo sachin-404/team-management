@@ -25,7 +25,7 @@ func DatabaseInit() {
 		panic(e)
 	}
 
-	e = database.AutoMigrate(&models.User{}, &models.Team{}, &models.TeamMember{})
+	e = database.AutoMigrate(&models.User{}, &models.Team{}, &models.TeamMember{}, &models.Employee{}, &models.Designation{})
 	if e != nil {
 		panic(e)
 	}
