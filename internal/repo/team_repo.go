@@ -1,6 +1,7 @@
 package repo
 
 import (
+	"errors"
 	"task/internal/models"
 
 	"gorm.io/gorm"
@@ -21,14 +22,28 @@ func AddMemberToDB(db *gorm.DB, teamMember *models.TeamMember) error {
 }
 
 func RemoveMemberFromDB(db *gorm.DB, teamMember *models.TeamMember) error {
-	if err := db.Where("team_id = ? AND user_id = ?", teamMember.TeamID, teamMember.UserID).Delete(&models.TeamMember{}).Error; err != nil {
+	team := models.TeamMember{}
+	if err := db.Where("team_id = ?", teamMember.TeamID).First(&team).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return gorm.ErrRecordNotFound
+		}
+	}
+	if err := db.Where("team_id = ? AND user_id = ?", teamMember.TeamID, teamMember.UserID).Delete(&team).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
 func MakeAdminInDB(db *gorm.DB, userID int) error {
-	if err := db.Model(&models.User{}).Where("id = ?", userID).Update("is_admin", true).Error; err != nil {
+	user := models.User{}
+	if err := db.First(&user, userID).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return gorm.ErrRecordNotFound
+		}
+		return err
+	}
+
+	if err := db.Model(&user).Where("id = ?", userID).Update("is_admin", true).Error; err != nil {
 		return err
 	}
 	return nil

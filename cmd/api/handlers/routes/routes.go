@@ -3,6 +3,7 @@ package routes
 import (
 	"net/http"
 	"task/cmd/api/handlers/auth"
+	"task/cmd/api/handlers/employee"
 	"task/cmd/api/handlers/team"
 
 	"github.com/labstack/echo/v4"
@@ -28,4 +29,8 @@ func RegisterRoutes(e *echo.Echo, db *gorm.DB) {
 	e.POST("/teams/:team_id/members/:user_id", team.AddMember)
 	e.DELETE("/teams/:team_id/members/:user_id", team.RemoveMember)
 	e.POST("/make_admin/:user_id", team.MakeAdmin)
+
+	e.POST("/create_employee", employee.CreateEmployee)
+	e.GET("/get_children/:id", employee.GetEmployeeHierarchy)
+	e.POST("/create_designation", employee.CreateDesignation)
 }
