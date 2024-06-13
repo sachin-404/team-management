@@ -28,7 +28,7 @@ type Employee struct {
 	EmployeeName     string      `json:"employee_name"`
 	ParentEmployeeID *uint       `json:"parent_employee_id"`
 	DesignationID    uint        `json:"designation_id"`
-	Designation      Designation `gorm:"foreignKey:DesignationID;references:DesignationId" json:"designation"`
+	Designation      Designation `gorm:"foreignKey:DesignationID;references:DesignationId" json:"-"`
 }
 
 type Designation struct {

@@ -31,5 +31,6 @@ func RegisterRoutes(e *echo.Echo, db *gorm.DB) {
 	e.POST("/make_admin/:user_id", team.MakeAdmin)
 
 	e.POST("/create_employee", employee.CreateEmployee)
+	e.GET("/get_children/:id", employee.GetEmployeeHierarchy)
 	e.POST("/create_designation", employee.CreateDesignation)
 }
